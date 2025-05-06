@@ -3,6 +3,7 @@
     <test name="RunSpecificClass">
         <classes>
             <class name="E_2_E.EndToEndValidSce"/>
+            <class name="NegativeScenario.CheckOutWithoutLogin"/>
         </classes>
     </test>
 </suite>

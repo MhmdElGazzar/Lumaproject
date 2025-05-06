@@ -78,7 +78,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <!--Class E2e_Sc -->
-                        <suiteXmlFile>E_2_E/EndToEndValidSce.java</suiteXmlFile>
+                        <suiteXmlFile>testing.xml</suiteXmlFile>
                         <!--<suiteXmlFile>TestRunner/E2eScenarios_parallelExecution.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                 </configuration>
