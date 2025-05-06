@@ -1,0 +1,35 @@
+{
+  "LoginCred": {
+    "email": "es87@gmail.com",
+    "password": "Nour123456",
+    "name":"nour",
+    "Lname":"es"
+  },
+  "SignUpCred": {
+    "name": "nourhan",
+    "Lname": "Ismail",
+    "email" : "esnll8258547585472@gmail.com",
+    "password": "Nourhan123456"
+  },
+  "CartInfo": {
+    "email":"nhjk@gil.com",
+    "password":"Nour123456",
+    "firstname":"nour",
+    "lastname":"ismail",
+    "Company": "ITI",
+    "country":"Egypt",
+    "city":"Giza",
+    "building":"16",
+    "floor":"5rd floor",
+    "street":"ELbahr st",
+    "zipcode":"12345",
+    "phone":"123654789"
+  },
+  "Account2": {
+    "email": "nnnn@gmail.com",
+    "password": "Fdlk4563252561234",
+    "name":"nour",
+    "Lname":"es",
+    "newPassword": "Fdlk45632525612345"
+  }
+}
