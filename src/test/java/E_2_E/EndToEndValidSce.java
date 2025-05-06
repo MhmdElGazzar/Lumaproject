@@ -18,7 +18,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     String nameOfProduct;
     ProductPage productPage;
     String ProductName;
-    int PriceOfProduct;
+    float PriceOfProduct;
     String numofQty = "5";
     JacketPage jacketPage;
     int NumOfProductBeforeAddToCart;

@@ -145,11 +145,11 @@ public class ProductPage {
         return new SearchPage(driver);
     }
 
-    public int GetSecondProductPrice()
+    public float GetSecondProductPrice()
     {
         Waits.waitForElementPresent(driver,Product2_price);
         String price=driver.findElement(Product2_price).getText();
-        int priceofProduct=basePage.convertStringToInt(price);
+        float priceofProduct=basePage.convertPriceToFloat(price);
         return priceofProduct;
     }
     public void setColorOfSecondProduct()
