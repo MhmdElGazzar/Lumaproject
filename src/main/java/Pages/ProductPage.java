@@ -41,6 +41,8 @@ public class ProductPage {
     private By reviewinput=By.xpath("//*[@id=\"review_field\"]");
     private By submitReview=By.xpath("//*[@id=\"review-form\"]/div/div/button/span");
 
+    private By ReviewCustomer=By.xpath("//*[@id=\"customer-reviews\"]/div[1]/strong");
+
     private By summaryTxtField=By.id("summary_field");
     private By reviewTxtField=By.id("review_field");
     private By submitButton=By.className("submit");
@@ -146,12 +148,20 @@ public class ProductPage {
         return new SearchPage(driver);
     }
 
-    public float GetSecondProductPrice()
+    public int GetSecondProductPrice()
     {
         Waits.waitForElementPresent(driver,Product2_price);
         String price=driver.findElement(Product2_price).getText();
-        float priceofProduct=basePage.convertPriceToFloat(price);
+        int priceofProduct=basePage.convertStringToInt(price);
         return priceofProduct;
+    }
+    public void Reviews()
+    {
+        Waits.waitForElementPresent(driver,ReviewCustomer);
+    }
+    public void shechClickableMessageShopingCart()
+    {
+        Waits.waitForClickableElement(driver,ShoppingCartLink);
     }
     public void setColorOfSecondProduct()
     {

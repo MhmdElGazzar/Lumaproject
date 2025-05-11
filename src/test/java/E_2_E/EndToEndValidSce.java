@@ -18,7 +18,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     String nameOfProduct;
     ProductPage productPage;
     String ProductName;
-    float PriceOfProduct;
+    int PriceOfProduct;
     String numofQty = "5";
     JacketPage jacketPage;
     int NumOfProductBeforeAddToCart;
@@ -46,6 +46,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     {
         homePage=new HomePage(driver);
         searchPage=homePage.SearchForItem(itemForSearch);
+        searchPage.checkRelatedCharisDisplay();
         Assert.assertTrue(searchPage.SearchResultMessage().contains(itemForSearch),"not Found");
 
     }
@@ -67,23 +68,18 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     @Test(dependsOnMethods = "selectItemFromResultOfSearch_andAddToWatchList")
     public void selectItemAndAddToCart()
     {
-    jacketPage=homePage.selectONProductFromCategory();
-    ProductName= jacketPage.GetNameOfProduct();
+        jacketPage=homePage.selectONProductFromCategory();
+        ProductName= jacketPage.GetNameOfProduct();
         System.out.println(ProductName);
-    jacketPage.hoveronProduct();
-    productPage=jacketPage.Add_to_cart();
-         NumOfProductBeforeAddToCart=productPage.getNumOfQtyOnIconCart();
+        jacketPage.hoveronProduct();
+        productPage=jacketPage.Add_to_cart();
+        NumOfProductBeforeAddToCart=productPage.getNumOfQtyOnIconCart();
         PriceOfProduct=productPage.GetSecondProductPrice();
         productPage.setSizeOfSecondProduct();
         productPage.setColorOfSecondProduct();
         productPage.setQtyInput(numofQty);
         productPage.AddItemToCart();
-
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        productPage.shechClickableMessageShopingCart();
         Assert.assertTrue(productPage.messageAlert().contains("You added Juno"));
 
 
@@ -95,10 +91,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     {
         productPage.IconCartIsVisability();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(5));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
+        productPage.IconCart();
 
         int numberOfQty= basePage.convertStringToInt(numofQty);
 
@@ -109,8 +102,8 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     public void GoToCartAndVerifythatpriceOfProductEqualTotalPrice()
     {
         cartPage=productPage.ClickOnShopingCart();
-        basePage.SleepThreed();
-         Price=cartPage.GetOrderTotalPriceNumber();
+
+        Price=cartPage.GetOrderTotalPriceNumber();
         String numOfText=cartPage.TotalPriceInCart();
         float PriceofProducts=  basePage.convertPriceToFloat(numOfText);
 
@@ -133,25 +126,23 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
 
         Assert.assertEquals(SubPrice,SubPriceBeforeRemoveInSummary);
 
+        float priceOfFirstElemnt=cartPage.GetPriceOfFirstElement();
 
         cartPage.ClickonCheckOutWithMultiple();
         cartPage.ClickonRemoveItemLink();
         cartPage.ClickonBackToCartPageBtn();
 
+        float numofQuantityAfterRemove =cartPage.GetQuantity();
+
         String SubPriceAfterRemove=cartPage.TotalPriceInCart();
         float SubPriceAfterRem= basePage.convertPriceToFloat(SubPriceAfterRemove);
-        try {
-            Thread.sleep(Duration.ofSeconds(5));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
+
         float SubPriceAFterRemoveInSummary=cartPage.GetSubTotalPriceNumberInSummary();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(5));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
+        float xx=SubPriceBeforeRemoveInSummary-priceOfFirstElemnt;
+        Assert.assertEquals(xx,SubPriceAFterRemoveInSummary ,"SubTotal in cart table not update");
 
-    //Assert.assertEquals(SubPriceAfterRem,SubPriceAFterRemoveInSummary ,"SubTotal in cart table not update");
+        //Assert.assertEquals(SubPriceAfterRem,SubPriceAFterRemoveInSummary ,"SubTotal in cart table not update");
 
 
 
@@ -161,11 +152,6 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
     {
         checkOutInfo= cartPage.clickONCheckOutBtn();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 //verify is found address or not
         //if found ,it is check out
         //else write info and completed information
@@ -186,15 +172,10 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
             checkOutInfo.ClickOnBtnNext();
         }
         else {
+            checkOutInfo.SetFixedRate();
+            checkOutInfo.ClickOnDropDownSummaryPrice();
             checkOutInfo.ClickOnBtnNext();
 
-        }
-
-
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
         checkOutInfo.ClickonCheckOutRatio();
         boolean isDisplayedAddRatio = checkOutInfo.isAddressRatioDisplay();
@@ -207,13 +188,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
             checkOutInfo.ClickonCheckOutBtn();
         }
 
-
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        checkOutInfo.continueShop();
         Assert.assertEquals(checkOutInfo.GetTitle(),"Thank you for your purchase!");
 
 
@@ -227,11 +202,7 @@ public class EndToEndValidSce extends TestBaseForEndTOEnd {
         jacketPage.hoveronProduct();
         productPage=jacketPage.Add_to_cart();
         productPage.clickOnReviewsToggle();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        productPage.Reviews();
         productPage.give4StarRate();
         productPage.writeSummary();
         productPage.writeReview();

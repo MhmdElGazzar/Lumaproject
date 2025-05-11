@@ -16,6 +16,7 @@ public class SearchPage {
     private By AddToWatchList=By.xpath("//*[@id=\"maincontent\"]/div[3]/div[1]/div[2]/div[2]/ol/li[1]/div/div/div[3]/div/div[2]/a[1]");
     private By nameOfproduct=By.xpath("//*[@id=\"maincontent\"]/div[3]/div[1]/div[2]/div[2]/ol/li[1]/div/div/strong/a");
     private By AddtocartBtn=By.xpath("//*[@id=\"maincontent\"]/div[3]/div[1]/div[2]/div[2]/ol/li[1]/div/div/div[3]/div/div[1]/form/button/span");
+    private By RelatedSearchTerms=By.xpath("//*[@id=\"maincontent\"]/div[3]/div[1]/div[2]/dl/dt");
 
     //methods
     public String SearchResultMessage() {
@@ -49,6 +50,10 @@ public class SearchPage {
     {
         Waits.waitForElementPresent(driver,nameOfproduct);
         return driver.findElement(nameOfproduct).getText();
+    }
+    public void checkRelatedCharisDisplay()
+    {
+        Waits.waitForElementPresent(driver,RelatedSearchTerms);
     }
 
 
