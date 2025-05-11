@@ -26,6 +26,8 @@ public class CartPage {
     private By SubTotalInSummary=By.xpath("//*[@id=\"cart-totals\"]/div/table/tbody/tr[1]/td/span");
     private By BackToCartPageBtn=By.xpath("//*[@id=\"checkout_multishipping_form\"]/div[3]/div[2]/a/span");
     //private By SubTotalincart=By.xpath("//*[@id=\"shopping-cart-table\"]/tbody/tr[1]/td[4]/span/span/span");
+    private By PriceOfFirstProduct=By.xpath("//*[@id=\"shopping-cart-table\"]/tbody[1]/tr[1]/td[2]/span/span/span");
+    private By iconCart=By.xpath("/html/body/div[2]/header/div[2]/div[1]/a");
 
 
     public void ClickonBackToCartPageBtn()
@@ -115,5 +117,11 @@ public class CartPage {
         Waits.clickOnElement(driver,CheckOutBtn);
         return new CheckOutInfo(driver);
     }
-
+    public float GetPriceOfFirstElement()
+    {
+        Waits.waitForElementPresent(driver,PriceOfFirstProduct);
+        String Price1=driver.findElement(PriceOfFirstProduct).getText();
+        float Price=basePage.convertPriceToFloat(Price1);
+        return Price;
+    }
 }

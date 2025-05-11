@@ -8,7 +8,7 @@
   "SignUpCred": {
     "name": "nourhan",
     "Lname": "Ismail",
-    "email" : "esnll8258547585472@gmail.com",
+    "email" : "eL1223844@gmail.com",
     "password": "Nourhan123456"
   },
   "CartInfo": {
@@ -27,9 +27,17 @@
   },
   "Account2": {
     "email": "nnnn@gmail.com",
-    "password": "Fdlk4563252561234",
+    "password": "Fdlk45632525612345",
     "name":"nour",
     "Lname":"es",
-    "newPassword": "Fdlk45632525612345"
+    "newPassword": "Fdlk45632525612345",
+    "OldPassword": "Fdlk4563252561234"
+  },
+  "OldAccount": {
+    "email": "nn8741@gmail.com",
+    "password": "Nourhan123456",
+    "name":"nn",
+    "Lname":"nn",
+    "newPassword": "Nourhan1234567"
   }
 }
