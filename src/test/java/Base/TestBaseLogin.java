@@ -26,12 +26,8 @@ public class TestBaseLogin {
         driver = new ChromeDriver(options);
         driver.get("https://magento.softwaretestingboard.com/");
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
         homePage = new HomePage(driver);
         LoginPage loginPage=homePage.clickonLoginBtn();
         Assert.assertEquals(loginPage.Getheader(),"Customer Login");

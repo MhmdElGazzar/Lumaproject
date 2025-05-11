@@ -23,18 +23,14 @@ public class TestBaseForEndTOEnd {
         driver = new ChromeDriver(options);
         driver.get("https://magento.softwaretestingboard.com/");
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
     @AfterTest
     public void closeTest()
     {
-        //  driver.quit();
+          driver.quit();
     }
 
 }
