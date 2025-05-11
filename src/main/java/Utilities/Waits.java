@@ -15,7 +15,10 @@ public class Waits {
 
     //TODO:: wait for to be element present
 
-
+    public  static void waitForClickableElement(WebDriver driver, By locator){
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(locator));
+    }
     public static void waitForElementPresent(WebDriver driver, By locator){
             new WebDriverWait(driver, Duration.ofSeconds(20))
                     .until(ExpectedConditions.presenceOfElementLocated(locator));

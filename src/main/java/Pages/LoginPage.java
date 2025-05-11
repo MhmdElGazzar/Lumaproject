@@ -4,8 +4,10 @@ import Utilities.DataUtil;
 import Utilities.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
 
 public class LoginPage {
     WebDriver driver;
@@ -16,6 +18,25 @@ public class LoginPage {
     By password_input=By.id("pass");
     private By AlertError=By.xpath("//*[@id=\"maincontent\"]/div[2]/div[2]/div/div/div");
 
+    private By EmailMessageError=By.xpath("//*[@id=\"email-error\"]");
+    private By PasswordMessageError=By.xpath("//*[@id=\"pass-error\"]");
+
+    public boolean isEmailRequiredMessageDisplayed() {
+        try {
+            WebElement emailErrorMessage = driver.findElement(EmailMessageError);
+            return emailErrorMessage.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+    public boolean isPasswordRequiredMessageDisplayed() {
+        try {
+            WebElement passErrorMessage = driver.findElement(PasswordMessageError);
+            return passErrorMessage.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 
 
 

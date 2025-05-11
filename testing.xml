@@ -14,7 +14,7 @@
     </test>
     <test name="NegativeScenario" preserve-order="true">
         <classes>
-            <class name="E_2_E.EndToEnd_InValidSce"></class>
+            <class name="E_2_E.E_2_E_invalidSce"></class>
         </classes>
     </test>
 </suite>

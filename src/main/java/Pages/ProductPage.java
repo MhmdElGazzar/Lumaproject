@@ -15,6 +15,7 @@ public class ProductPage {
     {
         this.driver=driver;
     }
+    private By iconCart=By.xpath("/html/body/div[2]/header/div[2]/div[1]/a");
 
     private By Product_name= By.xpath("//*[@id=\"maincontent\"]/div[2]/div/div[1]/div[1]/h1/span");
     private By Product_price=By.xpath("//*[@id=\"product-price-1556\"]/span");
@@ -160,4 +161,10 @@ public class ProductPage {
     {
         Waits.clickOnElement(driver,sizeOfProduct2);
     }
+
+    public void IconCart()
+    {
+        Waits.waitForClickableElement(driver,iconCart);
+    }
+
 }

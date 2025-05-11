@@ -35,11 +35,19 @@ public class CheckOutInfo {
     private By messageTitle=By.xpath("//*[@id=\"maincontent\"]/div[1]/h1/span");
     private By addressRatio=By.xpath("//*[@id=\"billing-address-same-as-shipping-checkmo\"]");
 
-//methods
+    private By continueShoping=By.xpath("//*[@id=\"maincontent\"]/div[3]/div/div[2]/div/div/a");
+    private By DropDownSummary=By.xpath("//*[@id=\"opc-sidebar\"]/div[1]/div/div[1]/strong");
+    private By FixedRate=By.xpath("//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr/td[1]/input");
+    private By EditBtn=By.xpath("//*[@id=\"checkout-payment-method-load\"]/div/div/div[2]/div[2]/div[2]/div/div[2]/button");
+
+    //methods
     public void setEmail(String Email)
     {
         Waits.sendData(driver,email,Email);
     }
+    public void SetFixedRate(){
+        Waits.waitForElementPresent(driver,FixedRate);
+        Waits.clickOnElement(driver,FixedRate);}
 
     public boolean isFormDisplayed() {
         try {
@@ -104,6 +112,23 @@ public class CheckOutInfo {
         }
         Waits.waitForElementPresent(driver,messageTitle);
         return driver.findElement(messageTitle).getText();
+    }
+    public void Editbutton()
+    {
+        Waits.waitForElementPresent(driver,EditBtn);
+        Waits.waitForClickableElement(driver,EditBtn);
+        Waits.clickOnElement(driver,EditBtn);
+    }
+
+    public void continueShop()
+    {
+        Waits.waitForElementPresent(driver,continueShoping);
+        Waits.waitForClickableElement(driver,continueShoping);
+    }
+    public void ClickOnDropDownSummaryPrice()
+    {
+        Waits.waitForElementPresent(driver,DropDownSummary);
+        Waits.clickOnElement(driver,DropDownSummary);
     }
 
 
