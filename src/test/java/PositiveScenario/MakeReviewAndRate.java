@@ -29,11 +29,7 @@ public class MakeReviewAndRate extends TestBase {
 
         productPage = homePage.ClickOnProduct();
         productPage.clickOnReviewsToggle();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         productPage.give4StarRate();
         productPage.writeSummary();
         productPage.writeReview();
@@ -48,11 +44,7 @@ public class MakeReviewAndRate extends TestBase {
         homePage = new HomePage(driver);
         productPage = homePage.ClickOnProduct();
         productPage.clickOnReviewsToggle();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         productPage.give4StarRate();
         productPage.writename();
         productPage.writeSummary();

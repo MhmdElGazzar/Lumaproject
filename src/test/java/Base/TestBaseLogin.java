@@ -3,8 +3,7 @@ package Base;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Utilities.DataUtil;
-import org.openqa.selenium.PageLoadStrategy;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
@@ -37,11 +36,9 @@ public class TestBaseLogin {
                         (DataUtil.getJsonData("TestData","LoginCred","password"))
                 .click_on_SignIn_btn();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        WebElement element = driver.findElement(By.xpath("/html/body/div[2]/header/div[1]/div/ul/li[1]/span"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String text = (String) js.executeScript("return arguments[0].textContent;", element);
 
         Assert.assertEquals(homePage.GetHeaderAfterLogin(), "Welcome, "+
                 (DataUtil.getJsonData("TestData","LoginCred","name")) +" " +

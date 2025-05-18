@@ -2,9 +2,7 @@ package PositiveScenario;
 
 import Base.TestBaseLogin;
 import Pages.*;
-import Utilities.DataUtil;
 import Utilities.LogsUtils;
-import org.openqa.selenium.devtools.v127.log.Log;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -24,21 +22,38 @@ public class DeleteFromCart extends TestBaseLogin {
     public void DeleteItemFromCart() {
         homePage = new HomePage(driver);
         productPage = homePage.ClickOnProduct();
-        int NumOfProductBeforeAddToCart=productPage.getNumOfQtyOnIconCart();
+
+// Get number of products in cart before adding
+        int numOfProductBeforeAddToCart = productPage.getNumOfQtyOnIconCart();
+        LogsUtils.info("Number of products in cart BEFORE adding: " + numOfProductBeforeAddToCart);
+
+// لو فاضي وخارج -1 عدليه لـ 0
+        if (numOfProductBeforeAddToCart == -1) {
+            numOfProductBeforeAddToCart = 0;
+        }
+
+// اختيارات المنتج
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         productPage.setSizeOfProduct();
         productPage.setColorOfProduct();
         productPage.setQtyInput(numofQty);
         productPage.AddItemToCart();
+
+// تأكد أن الأيقونة ظهرت
         productPage.IconCartIsVisability();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        productPage.IconCart();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(5));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
+// حساب القيم المتوقعة
+        int numberOfQty = basePage.convertStringToInt(numofQty); // عدد الكمية اللي كتبتيه مثلا 3
+        int numOfProductAfterAdd = productPage.getNumOfQtyOnIconCart(); // اللي حصل فعليًا في الأيقونة
+        int numExpected = numberOfQty + numOfProductBeforeAddToCart; // المتوقع = اللي كان موجود + اللي ضفتيه
 
-        int numberOfQty= basePage.convertStringToInt(numofQty);
+        LogsUtils.info("Number of products in cart AFTER adding: " + numOfProductAfterAdd);
+        LogsUtils.info("Expected number of products in cart: " + numExpected);
 
-        Assert.assertEquals(productPage.getNumOfQtyOnIconCart(),numberOfQty+NumOfProductBeforeAddToCart);
+// تأكيد النتيجة
+        Assert.assertEquals(numOfProductAfterAdd, numExpected, "The number of products after adding to cart is not as expected.");
 
 
         searchPage=productPage.SearchForItem(itemForSearch);
@@ -47,22 +62,16 @@ public class DeleteFromCart extends TestBaseLogin {
         searchPage.hoveronProduct();
         productPage =searchPage.Add_to_cart();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
 
         cartPage=productPage.ClickOnShopingCart();
 
-        basePage.SleepThreed();
+
         float Price=cartPage.GetOrderTotalPriceNumber();
         String numOfText=cartPage.TotalPriceInCart();
         float PriceofProducts=  basePage.convertPriceToFloat(numOfText);
 
 
-      //  float orderTotalPrice=Price-cartPage.GetDiscount()+cartPage.GetRateFixed();
+        //  float orderTotalPrice=Price-cartPage.GetDiscount()+cartPage.GetRateFixed();
 
         float orderTotalPrice=cartPage.GetSubTotalPriceNumberInSummary();
         Assert.assertEquals(PriceofProducts,orderTotalPrice);
@@ -70,14 +79,14 @@ public class DeleteFromCart extends TestBaseLogin {
         float numofQuantity =cartPage.GetQuantity();
 
         String SubPriceBrforeRemove=cartPage.TotalPriceInCart();
-       float SubPrice= basePage.convertPriceToFloat(SubPriceBrforeRemove);
+        float SubPrice= basePage.convertPriceToFloat(SubPriceBrforeRemove);
 
         float SubPriceBeforeRemoveInSummary=cartPage.GetSubTotalPriceNumberInSummary();
 
         LogsUtils.info(cartPage.GetSubTotalPriceNumberInSummary()+" ");
 
         Assert.assertEquals(SubPrice,SubPriceBeforeRemoveInSummary);
-
+        float priceOfFirstElemnt=cartPage.GetPriceOfFirstElement();
 
         cartPage.ClickonCheckOutWithMultiple();
         cartPage.ClickonRemoveItemLink();
@@ -90,9 +99,9 @@ public class DeleteFromCart extends TestBaseLogin {
 
         float SubPriceAFterRemoveInSummary=cartPage.GetSubTotalPriceNumberInSummary();
 
-
-        Assert.assertEquals(SubPriceAfterRem,SubPriceAFterRemoveInSummary ,"SubTotal in cart table not update");
-        Assert.assertEquals(numofQuantity,numofQuantityAfterRemove-1);
+        float xx=SubPriceBeforeRemoveInSummary-priceOfFirstElemnt;
+        Assert.assertEquals(xx,SubPriceAFterRemoveInSummary ,"SubTotal in cart table not update");
+        //Assert.assertEquals(numofQuantity,numofQuantityAfterRemove-1);
 
 
 

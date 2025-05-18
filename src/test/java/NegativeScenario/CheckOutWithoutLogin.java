@@ -24,11 +24,9 @@ public class CheckOutWithoutLogin extends TestBase {
         productPage.setColorOfProduct();
         productPage.setQtyInput(numofQty);
         productPage.AddItemToCart();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
-
+        productPage.IconCartIsVisability();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        productPage.IconCart();
         int numberOfQty=basePage.convertStringToInt(numofQty);
         Assert.assertEquals(productPage.getNumOfQtyOnIconCart(),numberOfQty);
 
@@ -41,11 +39,7 @@ public class CheckOutWithoutLogin extends TestBase {
         checkOutInfo= cartPage.clickONCheckOutBtn();
 
         checkOutInfo.setEmail(DataUtil.getJsonData("TestData","CartInfo","email"));
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         checkOutInfo.setFname(DataUtil.getJsonData("TestData","CartInfo","firstname"));
         checkOutInfo.setLname(DataUtil.getJsonData("TestData","CartInfo","lastname"));
         checkOutInfo.setCompany(DataUtil.getJsonData("TestData","CartInfo","Company"));
@@ -57,18 +51,12 @@ public class CheckOutWithoutLogin extends TestBase {
         checkOutInfo.SetTableRate();
         checkOutInfo.SetTax();
         checkOutInfo.ClickOnBtnNext();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        checkOutInfo.Editbutton();
         checkOutInfo.ClickonCheckOutRatio();
         checkOutInfo.ClickonCheckOutBtn();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
+        checkOutInfo.continueShop();
+
         Assert.assertEquals(checkOutInfo.GetTitle(),"You can login at First or enter valid email");
 
 
