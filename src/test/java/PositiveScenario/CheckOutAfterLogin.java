@@ -3,7 +3,7 @@ package PositiveScenario;
 import Base.TestBaseLogin;
 import Pages.*;
 import Utilities.DataUtil;
-import org.openqa.selenium.By;
+import Utilities.LogsUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,27 +20,43 @@ public class CheckOutAfterLogin extends TestBaseLogin {
     public void checkOut_After_Login() {
         homePage = new HomePage(driver);
         productPage = homePage.ClickOnProduct();
-        int NumOfProductBeforeAddToCart=productPage.getNumOfQtyOnIconCart();
+
+// Get number of products in cart before adding
+        int numOfProductBeforeAddToCart = productPage.getNumOfQtyOnIconCart();
+        LogsUtils.info("Number of products in cart BEFORE adding: " + numOfProductBeforeAddToCart);
+
+// لو فاضي وخارج -1 عدليه لـ 0
+        if (numOfProductBeforeAddToCart == -1) {
+            numOfProductBeforeAddToCart = 0;
+        }
+
+// اختيارات المنتج
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         productPage.setSizeOfProduct();
         productPage.setColorOfProduct();
         productPage.setQtyInput(numofQty);
         productPage.AddItemToCart();
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
-    //verify num of quntity of product you need to add in cart added in number of quantity in icon cart
-        int numberOfQty= basePage.convertStringToInt(numofQty);
-        Assert.assertEquals(productPage.getNumOfQtyOnIconCart(),numberOfQty+NumOfProductBeforeAddToCart);
+
+// تأكد أن الأيقونة ظهرت
+        productPage.IconCartIsVisability();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        productPage.IconCart();
+
+// حساب القيم المتوقعة
+        int numberOfQty = basePage.convertStringToInt(numofQty);
+        int numOfProductAfterAdd = productPage.getNumOfQtyOnIconCart();
+        int numExpected = numberOfQty + numOfProductBeforeAddToCart;
+
+        LogsUtils.info("Number of products in cart AFTER adding: " + numOfProductAfterAdd);
+        LogsUtils.info("Expected number of products in cart: " + numExpected);
+        Assert.assertEquals(numOfProductAfterAdd, numExpected, "The number of products after adding to cart is not as expected.");
+
+
 
         cartPage=productPage.ClickOnShopingCart();
 
         //verify compare total price in cart table by total price in summary
 
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);}
         String numOfText=cartPage.TotalPriceInCart();   //sub total Price in cart table
         float PriceofProducts=  basePage.convertPriceToFloat(numOfText); //float sub total
 
@@ -52,11 +68,7 @@ public class CheckOutAfterLogin extends TestBaseLogin {
 
         checkOutInfo= cartPage.clickONCheckOutBtn();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
 //verify is found address or not
         //if found ,it is check out
         //else write info and completed information
@@ -82,11 +94,7 @@ public class CheckOutAfterLogin extends TestBaseLogin {
         }
 
 
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
         checkOutInfo.ClickonCheckOutRatio();
         boolean isDisplayedAddRatio = checkOutInfo.isAddressRatioDisplay();
         if (isDisplayedAddRatio)
@@ -94,17 +102,13 @@ public class CheckOutAfterLogin extends TestBaseLogin {
             checkOutInfo.ClickonCheckOutRatio();
             checkOutInfo.ClickonCheckOutBtn();
         }
-else {
+        else {
             checkOutInfo.ClickonCheckOutBtn();
         }
 
 
-        try {
-            Thread.sleep(Duration.ofSeconds(3));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
+        checkOutInfo.continueShop();
         Assert.assertEquals(checkOutInfo.GetTitle(),"Thank you for your purchase!");
 
 

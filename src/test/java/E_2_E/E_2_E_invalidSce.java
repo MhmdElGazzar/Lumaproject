@@ -3,12 +3,10 @@ package E_2_E;
 
 import Base.TestBase;
 import Pages.*;
-        import Utilities.DataUtil;
+import Utilities.DataUtil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.time.Duration;
-
 public class E_2_E_invalidSce extends TestBase {
 
     HomePage homePage;
@@ -24,7 +22,7 @@ public class E_2_E_invalidSce extends TestBase {
     EditAccount editAccount;
 
     @Test
-    public void signup()
+    public void signupWithA_RegisteredAccount()
     {
         homePage = new HomePage(driver);
         SignUp signUp=homePage.clickonSignUpBtn();

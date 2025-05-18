@@ -4,7 +4,10 @@ import Base.TestBase;
 import Pages.HomePage;
 import Pages.LoginPage;
 import Utilities.DataUtil;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -24,13 +27,12 @@ public class validLogin extends TestBase {
                         (DataUtil.getJsonData("TestData","LoginCred","password"))
                 .click_on_SignIn_btn();
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        Assert.assertEquals(homePage.GetHeaderAfterLogin(), "Welcome, "+
+        WebElement element = driver.findElement(By.xpath("/html/body/div[2]/header/div[1]/div/ul/li[1]/span"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String text = (String) js.executeScript("return arguments[0].textContent;", element);
+
+        Assert.assertEquals(text, "Welcome, "+
                 (DataUtil.getJsonData("TestData","LoginCred","name")) +" " +
                 (DataUtil.getJsonData("TestData","LoginCred","Lname")) +"!");
 

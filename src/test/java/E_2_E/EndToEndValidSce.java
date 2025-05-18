@@ -7,8 +7,6 @@ import Utilities.LogsUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-//serve target/allure-results
 public class EndToEndValidSce extends TestBaseForEndTOEnd {
     HomePage homePage;
     LoginPage loginPage;
