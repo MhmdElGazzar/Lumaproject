@@ -4,6 +4,7 @@ import Base.TestBase;
 import Pages.AccountPage;
 import Pages.HomePage;
 import Pages.SignUp;
+import Pages.basePage;
 import Utilities.DataUtil;
 
 import org.testng.Assert;
@@ -32,12 +33,10 @@ public class validSignUP extends TestBase {
         Assert.assertTrue(accountPage.messageSuccessSignup().contains("Thank you for registering"));
 
 
-        try {
-            Thread.sleep(Duration.ofSeconds(2));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        String title= accountPage.GetTitle();
+        Assert.assertEquals(title,"My Account");
+        // basePage.SleepThreed();
+        accountPage.ClickONChangePassword();
         Assert.assertEquals(accountPage.GetHeaderAfterSignUp(), "Welcome, "+
                 (DataUtil.getJsonData("TestData","SignUpCred","name")) +" " +
                 (DataUtil.getJsonData("TestData","SignUpCred","Lname")) +"!");
